@@ -3,9 +3,9 @@
 ## Findings by Grey Hawk Reach
 | Severity | Title | 
 |:--:|:---|
-|[M-01](#crosschain-token-airdrop-always-fails-due-to-insufficient-feeCrosschain token airdrop always fails due to insufficient fee) | Crosschain token airdrop always fails due to insufficient fee | 
+| [M-01](#m-01-crosschain-token-airdrop-always-fails-due-to-insufficient-fee) | Crosschain token airdrop always fails due to insufficient fee | 
 
-# Crosschain token airdrop always fails due to insufficient fee
+## [M-01] Crosschain token airdrop always fails due to insufficient fee 
 # Summary
 xcall in CrosschainDistributor._settleClaim always fails due to insufficient fee.
 
