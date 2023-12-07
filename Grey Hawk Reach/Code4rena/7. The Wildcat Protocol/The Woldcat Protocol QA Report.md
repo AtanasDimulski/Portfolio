@@ -1,3 +1,0 @@
-# The Wildcat Protocol QA Report
-
-Report coming soon...
