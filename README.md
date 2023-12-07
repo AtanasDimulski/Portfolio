@@ -1,3 +1,16 @@
+# About Dimulski
+
+Hi there 👋, Dimulski here, an independent blockchain security researcher currently active in audit contests on platforms such as Code4rena, Sherlock, and Codehawks. Here, you can see some of my past findings and contest results.
+ - Team Lead at [Grey Hawk Reach](https://twitter.com/reachauditing)
+ - Red Team member [QuillAudits](https://www.quillaudits.com/services/qrt-as-a-service)
+
+### Contact Information
+I am always looking for new opportunities be it a job opening, private audit/security review, or simply for collaborations. Feel free to reach out via:
+
+  - Twitter: [@dimulski](https://twitter.com/dimulskiatana)
+  - Telegram: [@dimulski](https://t.me/dimulski)
+  - Linkedin: [Atanas Dimulski](https://www.linkedin.com/in/atanas-dimulski-9bb628195/)
+  - Email: [dimulskiatanas@gmail.com](dimulskiatanas@gmail.com)
 # Summary - Dimulski
 | Overall | High risk | Medium risk |
 |:--:|:--:|:--:|
