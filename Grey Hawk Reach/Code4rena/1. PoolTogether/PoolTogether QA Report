@@ -1,3 +1,0 @@
-# PoolTogether QA Report
-
-Report coming soon...
