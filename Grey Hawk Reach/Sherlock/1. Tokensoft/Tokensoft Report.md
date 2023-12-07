@@ -1,9 +1,9 @@
 # [Tokensoft Report](https://audits.sherlock.xyz/contests/100/leaderboard)
 
-## Findings by 0xnevi
+## Findings by Grey Hawk Reach
 | Severity | Title | 
 |:--:|:---|
-| [M-01](#crosschain-token-airdrop-always-fails-due-to-insufficient-feeCrosschain token airdrop always fails due to insufficient fee)| Crosschain token airdrop always fails due to insufficient fee | 
+|[M-01](#crosschain-token-airdrop-always-fails-due-to-insufficient-feeCrosschain token airdrop always fails due to insufficient fee) | Crosschain token airdrop always fails due to insufficient fee | 
 
 # Crosschain token airdrop always fails due to insufficient fee
 # Summary
