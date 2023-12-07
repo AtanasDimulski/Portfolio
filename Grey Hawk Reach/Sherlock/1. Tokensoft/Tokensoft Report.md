@@ -1,4 +1,4 @@
-# [Tokensoft Report](https://audits.sherlock.xyz/contests/100/leaderboard)
+# [Tokensoft Report](https://audits.sherlock.xyz/contests/100/report)
 
 ## Findings by Grey Hawk Reach
 | Severity | Title | 
