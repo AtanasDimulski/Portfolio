@@ -34,7 +34,7 @@ I am always looking for new opportunities be it a job opening, private audit/sec
 # Summary - Grey Hawk Reach 
 | Overall | High risk | Medium risk |
 |:--:|:--:|:--:|
-| 16 High/Medium | 10 High | 6 Medium |  
+| 18 High/Medium | 12 High | 6 Medium |  
 
 # <img src="https://code4rena.com/images/c4-logo-icon.svg" width=40 height=27> Code4rena
 
@@ -45,7 +45,7 @@ I am always looking for new opportunities be it a job opening, private audit/sec
 | [veRWA](https://code4rena.com/contests/2023-08-verwa#top) | 2 | 0 | [Report](https://github.com/AtanasDimulski/Portfolio/blob/main/Grey%20Hawk%20Reach/Code4rena/3.%20veRWA/veRWA%20Report.md) |
 | [Chainlink Staking v0.2](https://code4rena.com/contests/2023-08-chainlink-staking-v02#top) | 0 | 2 | [Private report](https://github.com/AtanasDimulski/Portfolio/blob/main/Grey%20Hawk%20Reach/Code4rena/4.%20Chainlink%20Staking%20v0.2/Chainlink%20Staking%20v0.2%20Report.md) |
 | [The Wildcat Protocol](https://code4rena.com/contests/2023-10-the-wildcat-protocol#top) | 1 | 1 | [Coming soon](https://github.com/AtanasDimulski/Portfolio/blob/main/Grey%20Hawk%20Reach/Code4rena/6.%20The%20Wildcat%20Protocol/The%20Wildcat%20Protocol%20Report.md) |
-| [Kelp DAO rsETH](https://code4rena.com/contests/2023-11-kelp-dao-rseth#top) | - | - | [Coming soon](https://github.com/AtanasDimulski/Portfolio/blob/main/Grey%20Hawk%20Reach/Code4rena/7.%20Kelp%20DAO%20rsETH/Kelp%20DAO%20rsETH%20Report.md) |
+| [Kelp DAO rsETH](https://code4rena.com/contests/2023-11-kelp-dao-rseth#top) | 2 | 0 | [Coming soon](https://github.com/AtanasDimulski/Portfolio/blob/main/Grey%20Hawk%20Reach/Code4rena/7.%20Kelp%20DAO%20rsETH/Kelp%20DAO%20rsETH%20Report.md) |
 
 ## <img src="https://audits.sherlock.xyz/_next/static/media/sherlock_logo.bf519c9e.svg" width=40 height=27> Sherlock
 | Contest | High risk | Medium risk | Security report | 
@@ -70,4 +70,4 @@ Quality Assurance (QA) reports are reports comprising Low/Non-critical/Informati
 | [Chainlink Staking v0.2](https://code4rena.com/contests/2023-08-chainlink-staking-v02#top) | Grade-B | [Private report](https://github.com/AtanasDimulski/Portfolio/blob/main/Grey%20Hawk%20Reach/Code4rena/4.%20Chainlink%20Staking%20v0.2/Chainlink%20Staking%20v0.2%20QA%20Report.md)|
 | [Brahma](https://code4rena.com/contests/2023-10-brahma#top) | Grade-A | [Report](https://github.com/AtanasDimulski/Portfolio/blob/main/Grey%20Hawk%20Reach/Code4rena/5.%20Brahma/Brahma%20QA%20Report.md) |
 | [The Wildcat Protocol](https://code4rena.com/contests/2023-10-the-wildcat-protocol#top) | Grade-B | [Coming soon](https://github.com/AtanasDimulski/Portfolio/blob/main/Grey%20Hawk%20Reach/Code4rena/6.%20The%20Wildcat%20Protocol/The%20Wildcat%20Protocol%20QA%20Report.md) |
-| [Kelp DAO rsETH](https://code4rena.com/contests/2023-11-kelp-dao-rseth#top) | - | [Coming soon](https://github.com/AtanasDimulski/Portfolio/blob/main/Grey%20Hawk%20Reach/Code4rena/7.%20Kelp%20DAO%20rsETH/Kelp%20DAO%20rsETH%20QA%20Report.md) |
+| [Kelp DAO rsETH](https://code4rena.com/contests/2023-11-kelp-dao-rseth#top) | Grade-B | [Coming soon](https://github.com/AtanasDimulski/Portfolio/blob/main/Grey%20Hawk%20Reach/Code4rena/7.%20Kelp%20DAO%20rsETH/Kelp%20DAO%20rsETH%20QA%20Report.md) |
