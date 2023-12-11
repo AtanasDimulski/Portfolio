@@ -4,7 +4,7 @@ Hi there 👋, Dimulski here, an independent blockchain security researcher curr
  - Team Lead at [Grey Hawk Reach](https://twitter.com/reachauditing)
  - Red Team member [QuillAudits](https://www.quillaudits.com/services/qrt-as-a-service)
 
-### Contact Information
+## Contact Information
 I am always looking for new opportunities be it a job opening, private audit/security review, or simply for collaborations. Feel free to reach out via:
 
   - Twitter: [@dimulski](https://twitter.com/dimulskiatana)
