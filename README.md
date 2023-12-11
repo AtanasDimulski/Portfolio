@@ -36,7 +36,7 @@ I am always looking for new opportunities be it a job opening, private audit/sec
 |:--:|:--:|:--:|
 | 18 High/Medium | 12 High | 6 Medium |  
 
-# <img src="https://code4rena.com/images/c4-logo-icon.svg" width=40 height=27> Code4rena
+## <img src="https://code4rena.com/images/c4-logo-icon.svg" width=40 height=27> Code4rena
 
 | Contest | High risk | Medium risk | Security report | 
 |:--:|:--:|:--:|:--:|
