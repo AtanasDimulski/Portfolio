@@ -1,9 +1,9 @@
 # Pay Per Vulnerability (PPV) audits
- - Base fee: $500
  - Critical: $1000
  - High: $750
  - Medium: $500
  - Low: Free
+ - Base fee: $500
    
 # Severity classification
 
