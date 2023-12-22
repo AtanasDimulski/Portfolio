@@ -14,17 +14,18 @@ I am always looking for new opportunities be it a job opening, private audit/sec
 # Summary - Dimulski
 | Overall | High risk | Medium risk |
 |:--:|:--:|:--:|
-| 6 High/Medium | 5 High | 1 Medium | 
+| 10 High/Medium | 7 High | 3 Medium | 
 ## <img src="https://code4rena.com/images/c4-logo-icon.svg" width=40 height=27> Code4rena
 
 | Contest | High risk | Medium risk | Security report | 
 |:--:|:--:|:--:|:--:|
 | [Dopex](https://code4rena.com/contests/2023-08-dopex#top) | 1 | 0 | [Coming soon](https://github.com/AtanasDimulski/Portfolio/blob/main/Dimulski/Code4rena/1.%20Dopex/Dopex%20Report.md) |
-| [NextGen](https://code4rena.com/contests/2023-10-nextgen#top) | - | - | [Coming soon](https://github.com/AtanasDimulski/Portfolio/blob/main/Dimulski/Code4rena/2.%20NextGen/NextGen%20Report.md) |
+| [NextGen](https://code4rena.com/contests/2023-10-nextgen#top) | 1 | 2 | [Coming soon](https://github.com/AtanasDimulski/Portfolio/blob/main/Dimulski/Code4rena/2.%20NextGen/NextGen%20Report.md) |
 ## <img src="https://audits.sherlock.xyz/_next/static/media/sherlock_logo.bf519c9e.svg" width=40 height=27> Sherlock
 | Contest | High risk | Medium risk | Security report | 
 |:--:|:--:|:--:|:--:|
 | [Hubble Exchange](https://audits.sherlock.xyz/contests/72) | 0 | 1 | [Report](https://github.com/AtanasDimulski/Portfolio/blob/main/Dimulski/Sherlock/1.%20Hubble%20Exchange/Hubble%20Exchange%20Report.md) |
+| [Nouns Builder](https://audits.sherlock.xyz/contests/111) | 1 | 0 | [Coming soon](https://github.com/AtanasDimulski/Portfolio/blob/main/Dimulski/Code4rena/2.%20NextGen/NextGen%20Report.md) |
 
 ## <img src="https://res.cloudinary.com/droqoz7lg/image/upload/v1689080263/snhkgvtsidryjdtx0pce.png" width=32 height=22> CodeHawks
 | Contest | High risk | Medium risk | Security report | 
@@ -60,7 +61,7 @@ Analysis reports are in-depth analyses of a codebase as a whole. You can check o
 | Contest | Grade | Analysis Report |
 |:--:|:--:|:--:|
 | [Chainlink Staking v0.2](https://code4rena.com/contests/2023-08-chainlink-staking-v02#top) | Grade-A | [Private report](https://github.com/AtanasDimulski/Portfolio/blob/main/Grey%20Hawk%20Reach/Code4rena/4.%20Chainlink%20Staking%20v0.2/Chainlink%20Staking%20v0.2%20Analysis%20Report.md)|
-| [NextGen](https://code4rena.com/contests/2023-10-nextgen#top) | - | [Coming soon](https://github.com/AtanasDimulski/Portfolio/blob/main/Dimulski/Code4rena/2.%20NextGen/NextGen%20Analysis%20Report.md) |
+| [NextGen](https://code4rena.com/contests/2023-10-nextgen#top) | Grade-A | [Coming soon](https://github.com/AtanasDimulski/Portfolio/blob/main/Dimulski/Code4rena/2.%20NextGen/NextGen%20Analysis%20Report.md) |
 
 ## Code4rena QA Reports
 Quality Assurance (QA) reports are reports comprising Low/Non-critical/Informational findings that can have some impact on a protocol but do not result in a direct loss of funds or broken protocol functionality.
