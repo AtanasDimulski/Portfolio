@@ -3,7 +3,9 @@
 Hi there 👋, Dimulski here, an independent blockchain security researcher currently active in audit contests on platforms such as Code4rena, Sherlock, and Codehawks. Here, you can see some of my past findings and contest results.
  - Team Lead at [Grey Hawk Reach](https://twitter.com/reachauditing)
  - Red Team member [QuillAudits](https://www.quillaudits.com/services/qrt-as-a-service)
-
+ - Code4rena Profile: [dimulski](https://code4rena.com/@dimulski)
+ - Sherlock Profile: [dimulski](https://audits.sherlock.xyz/watson/dimulski)
+ - CodeHawks Profile: [dimulski](https://www.codehawks.com/profile/clk4159y3002smb089da6c13f)
 ## Contact Information
 I am always looking for new opportunities be it a job opening, private audit/security review, or simply for collaborations. Feel free to reach out via:
 
@@ -11,16 +13,20 @@ I am always looking for new opportunities be it a job opening, private audit/sec
   - Telegram: [@dimulski](https://t.me/dimulski)
   - Linkedin: [Atanas Dimulski](https://www.linkedin.com/in/atanas-dimulski-9bb628195/)
   - Email: [dimulskiatanas@gmail.com](dimulskiatanas@gmail.com)
+
 # Summary - Dimulski
 | Overall | High risk | Medium risk |
 |:--:|:--:|:--:|
-| 10 High/Medium | 7 High | 3 Medium | 
+| 11 High/Medium | 7 High | 4 Medium | 
 ## <img src="https://code4rena.com/images/c4-logo-icon.svg" width=40 height=27> Code4rena
 
 | Contest | High risk | Medium risk | Security report | 
 |:--:|:--:|:--:|:--:|
 | [Dopex](https://code4rena.com/contests/2023-08-dopex#top) | 1 | 0 | [Coming soon](https://github.com/AtanasDimulski/Portfolio/blob/main/Dimulski/Code4rena/1.%20Dopex/Dopex%20Report.md) |
 | [NextGen](https://code4rena.com/contests/2023-10-nextgen#top) | 1 | 2 | [Coming soon](https://github.com/AtanasDimulski/Portfolio/blob/main/Dimulski/Code4rena/2.%20NextGen/NextGen%20Report.md) |
+| [Revolution Protocol](https://code4rena.com/audits/2023-12-revolution-protocol#top) | 0 | 1 | [Coming soon](https://github.com/AtanasDimulski/Portfolio/blob/main/Dimulski/Code4rena/2.%20NextGen/NextGen%20Report.md) |
+| [Curves]() | - | - | [Coming soon](https://github.com/AtanasDimulski/Portfolio/blob/main/Dimulski/Code4rena/2.%20NextGen/NextGen%20Report.md) |
+
 ## <img src="https://audits.sherlock.xyz/_next/static/media/sherlock_logo.bf519c9e.svg" width=40 height=27> Sherlock
 | Contest | High risk | Medium risk | Security report | 
 |:--:|:--:|:--:|:--:|
