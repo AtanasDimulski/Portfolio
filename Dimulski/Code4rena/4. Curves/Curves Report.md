@@ -1,3 +1,3 @@
-# NextGen Report
+# Curves Report
 
 Report coming soon...
