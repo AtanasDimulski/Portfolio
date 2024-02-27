@@ -1,3 +1,5 @@
+# [The Wildcat Protocol Report](https://code4rena.com/reports/2023-10-wildcat)
+
 # [L-01] The max amount for a single deposit into EigenLayer strategy can't be reached.
 # Lines of code
 
