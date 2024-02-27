@@ -1,4 +1,4 @@
-# [The Wildcat Protocol Report](https://code4rena.com/reports/2023-10-wildcat)
+# [Kelp DAO rsETH QA Report](https://code4rena.com/reports/2023-11-kelp)
 
 ## Findings by Grey Hawk Reach
 | Severity | Title | 
