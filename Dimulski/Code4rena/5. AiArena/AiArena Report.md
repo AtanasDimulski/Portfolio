@@ -1,3 +1,3 @@
-# NextGen Report
+# AiArena Report
 
 Report coming soon...
