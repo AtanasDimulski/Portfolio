@@ -1,126 +1,198 @@
 # [The Wildcat Protocol QA Report](https://code4rena.com/reports/2023-10-wildcat)
 
-# [L-01] The max amount for a single deposit into EigenLayer strategy can't be reached.
-# Lines of code
-
-https://github.com/code-423n4/2023-11-kelp/blob/main/src/LRTDepositPool.sol#L132-L134
+Wrong accounting in transferFromer   
+## Lines of code
+https://github.com/code-423n4/2023-10-wildcat/blob/main/src/market/WildcatMarketToken.sol#L41-L576
 
 ## Impact
-Before users can deposit funds into the ```LRTDepositPool.sol``` contract via the ```depositAsset()``` function, a check is performed to see if the current amount doesn't exceed the maxPerDeposit set by the EigenLyaer strategy.
-The EigenLayer strategy contract [StrategyBaseTVLLimits.sol](https://github.com/Layr-Labs/eigenlayer-contracts/blob/master/src/contracts/strategies/StrategyBaseTVLLimits.sol) where funds will be deposited has two important checks 
-```
-/// The maximum deposit (in underlyingToken) that this strategy will accept per deposit
-    uint256 public maxPerDeposit;
-```
-and
-
-```
-/// The maximum deposits (in underlyingToken) that this strategy will hold
-    uint256 public maxTotalDeposits;
-```
-The ```depositLimitByAsset``` set in the ```LRTConfig.sol``` contract is there to check if the ```maxPerDeposit``` set in the Eigenlayer protocol is not exceeded. Problem arises in how this value is checked. As can be seen in the POC  ```getAssetBalance()``` returns deposited tokens + accrued rewards. Depending on how often deposits on EigenLayer strategies are not paused Kelp may not gather all of the allowed amount for a deposit. Which results in loosing possible rewards. As each deposit is performed there will be more accrued rewards resulting in a smaller pot gathered by depositors for a stake in EigenLayer strategies.
+When a user approves another user to spend a certain amount of his funds, he has to execute the approve() function in the WildcatMarketToken.sol and specify the desired amount. The wildcat token is a rebasing token, that utilizes a scaleFactor to apply interest to the balances of lenders. The value that we are interested in is scaledAmount and that is the value that the user is supposed to be approved for. The problems arises if the approved user executes transferFrom() at a later date. As it can be seen from the provided POC below the difference is almost 20e18 tokens. As the time between approve() is called and the approved account executes a transferFrom() function the difference will be bigger. As mentioned by the protocol in the The Pitch "Wildcat is a tool for sophisticated entities who wish to bring credit agreements on-chain". So we can expect that big amounts are on the line, resulting in big differences on the amount a user is approved for, and supposed to be able to transfer, than the actual amount he can transfer.
 
 ## Proof of Concept
-  **1.** When kelp first start gathering deposit the hardcoded limit is 100_000e18, if this funds are collected and deposited now kelp have a deposit into EigenLayer which is generating yield
-  **2.** Then kelp will increase the ```depositLimitByAsset``` to 200_000e18 in order to gather new deposits from users, and deposit in a for example a month when eigen unpauses their deposit function.
-  **3.** During this time kelp has already deposited 100_000e18 tokens that will be generating yield
-  **4.** Instead of gathering 100_000e18 for a new deposit they will gather lets say 98_000e18
-  **5.** Which results in 2_000e18 lost deposits that can be generating yield for the next month
-Keep in mind that the probability of ```maxPerDeposit``` being set to 100_000e18 on mainet is low, as the first time EigenLayer opened up their deposits the maxTotalDeposit for strategies was 3600e18.
+Add the following test to WildcatMarketController.t.sol
 
- - In order to deposit funds the user calls ```depositAsset()``` function in the ```LRTDepositPool.sol``` contract
+```solidity
+function test_WrongAccountingApprove() public {
+    setUpContracts();
+
+    /// INFO: Approve Lenders
+    vm.startPrank(borrower);
+    address[] memory lenders = new address[](2);
+    lenders[0] = alice;
+    lenders[1] = bob;
+    wildcatMarketController.authorizeLenders(lenders);
+    address[] memory markets = new address[](1);
+    markets[0] = marketAddress;
+    wildcatMarketController.updateLenderAuthorization(alice, markets);
+    wildcatMarketController.updateLenderAuthorization(bob, markets);
+    vm.stopPrank();
+
+    /// INFO: Alice deposits
+    vm.startPrank(alice);
+    mockERC20.approve(marketAddress, 10000e18);
+    wildcatMarket.depositUpTo(10000e18);
+    console.log("This is the scale factor after alice deposit: ", wildcatMarket.scaleFactor());
+    wildcatMarket.approve(bob, 10000e18);
+    console.log("Alice approves bob for: ", wildcatMarket.allowance(alice, bob));
+    vm.stopPrank();
+
+    /// INFO: Bob calls transferFrom
+    vm.startPrank(bob);
+    uint32 skipSeconds = 7 days;
+    skip(skipSeconds);
+    console.log("Scaled balance of bob before transfer: ", wildcatMarket.scaledBalanceOf(bob));
+    wildcatMarket.transferFrom(alice, bob, 10000e18);
+    console.log("Scaled balance of bob after transfer: ", wildcatMarket.scaledBalanceOf(bob));
+    console.log("Scaled balance of alice after bob transfer: ", wildcatMarket.scaledBalanceOf(alice));
+    console.log("Alice approves bob for: ", wildcatMarket.allowance(alice, bob));
+    vm.stopPrank();
+  }
 ```
- function depositAsset(
-        address asset,
-        uint256 depositAmount
-    )
-        external
-        whenNotPaused
-        nonReentrant
-        onlySupportedAsset(asset)
-    {
-        // checks
-        if (depositAmount == 0) {
-            revert InvalidAmount();
-        }
-        if (depositAmount > getAssetCurrentLimit(asset)) {
-            revert MaximumDepositLimitReached();
-        }
+```solidity
+Logs:
+  This is the scale factor after alice deposit:  1000000000000000000000000000
+  Alice approves bob for:  10000000000000000000000
+  Scaled balance of bob before transfer:  0
+  Scaled balance of bob after transfer:  9980858627290128520645
+  Scaled balance of alice after bob transfer:  19141372709871479355
+  Alice approves bob for:  0
+```
+In order to run the above test add the following imports to WildcatMarketController.t.sol:
 
-        if (!IERC20(asset).transferFrom(msg.sender, address(this), depositAmount)) {
-            revert TokenTransferFailed();
-        }
+```solidity
+import {WildcatArchController} from 'src/WildcatArchController.sol';
+import {WildcatMarketControllerFactory} from 'src/WildcatMarketControllerFactory.sol';
+import {
+  MinimumDelinquencyGracePeriod, MaximumDelinquencyGracePeriod, 
+  MinimumReserveRatioBips, MaximumReserveRatioBips, MinimumDelinquencyFeeBips, 
+  MaximumDelinquencyFeeBips, MinimumWithdrawalBatchDuration, MaximumWithdrawalBatchDuration, 
+  MinimumAnnualInterestBips, MaximumAnnualInterestBips } from './shared/TestConstants.sol';
+import {WildcatMarketController} from 'src/WildcatMarketController.sol';
+import { WildcatSanctionsSentinel, IChainalysisSanctionsList, IWildcatArchController } from 'src/WildcatSanctionsSentinel.sol';
+import { WildcatSanctionsEscrow, IWildcatSanctionsEscrow } from 'src/WildcatSanctionsEscrow.sol';
+import { SanctionsList } from 'src/libraries/Chainalysis.sol';
+import { MockChainalysis, deployMockChainalysis } from './helpers/MockChainalysis.sol';
+```
 
-        // interactions
-        uint256 rsethAmountMinted = _mintRsETH(asset, depositAmount);
+Add the following variables to WildcatMarketController.t.sol:
 
-        emit AssetDeposit(asset, depositAmount, rsethAmountMinted);
+```solidity
+ address public alice = address(123);
+  address public bob = address(124);
+  address public hacker = address(125);
+  address public borrower = address(126);
+  address public archOwner = address(127);
+  WildcatArchController public wildcatArchController;
+  WildcatMarketControllerFactory public wildcatMarketControllerFactory;
+  MarketParameterConstraints public constraintsWMC;
+
+  WildcatMarket public wildcatMarket;
+  address public marketAddress;
+
+  WildcatMarketController public wildcatMarketController;
+  address public marketControllerAddress;
+  MockERC20 public mockERC20;
+  WildcatSanctionsSentinel internal sentinel;
+```
+
+Add the following functions to WildcatMarketController.t.sol:
+
+```solidity
+function _resetConstraints() internal {
+    constraintsWMC = MarketParameterConstraints({
+      minimumDelinquencyGracePeriod: MinimumDelinquencyGracePeriod,
+      maximumDelinquencyGracePeriod: MaximumDelinquencyGracePeriod,
+      minimumReserveRatioBips: MinimumReserveRatioBips,
+      maximumReserveRatioBips: MaximumReserveRatioBips,
+      minimumDelinquencyFeeBips: MinimumDelinquencyFeeBips,
+      maximumDelinquencyFeeBips: MaximumDelinquencyFeeBips,
+      minimumWithdrawalBatchDuration: MinimumWithdrawalBatchDuration,
+      maximumWithdrawalBatchDuration: MaximumWithdrawalBatchDuration,
+      minimumAnnualInterestBips: MinimumAnnualInterestBips,
+      maximumAnnualInterestBips: MaximumAnnualInterestBips
+    });
+  }
+
+  function setUpContracts() public {
+    /// INFO: Deploy MockErc20 token and mint tokens
+    mockERC20 = new MockERC20('TokenR', 'TKNR', 18);
+    // mockERC20.mint(bob, 10000e18);
+    mockERC20.mint(alice, 10000e18);
+
+    vm.startPrank(archOwner);
+    /// INFO: Deploy & set up ArchController
+    wildcatArchController = new WildcatArchController();
+    wildcatArchController.registerBorrower(borrower);
+
+    /// INFO: Set up sentinel
+    sentinel = new WildcatSanctionsSentinel(address(wildcatArchController), address(SanctionsList));
+
+    /// INFO: Deploy Factory
+    _resetConstraints();
+    wildcatMarketControllerFactory = new WildcatMarketControllerFactory(
+      address(wildcatArchController),
+      address(sentinel),
+      constraintsWMC
+    );
+    wildcatArchController.registerControllerFactory(address(wildcatMarketControllerFactory));
+    vm.stopPrank();
+
+    /// INFO: Deploy MarketController and Market
+    vm.startPrank(borrower);
+    uint128 maxTotalSupply = 100_000e18;
+    uint16 annualInterestBips = 1000; // 10%
+    uint16 delinquencyFeeBips = 1000; // 10%
+    uint32 withdrawalBatchDuration = 3600; // 1 hour
+    uint16 reserveRatioBips = 1000; // 10%
+    uint32 delinquencyGracePeriod = 3600; // 1 hour
+
+    (marketControllerAddress, marketAddress) = wildcatMarketControllerFactory.deployControllerAndMarket(
+      "WildcatTokenR",
+      "WCTKNR",
+      address(mockERC20),
+      maxTotalSupply,
+      annualInterestBips,
+      delinquencyFeeBips,
+      withdrawalBatchDuration,
+      reserveRatioBips,
+      delinquencyGracePeriod
+    );
+    wildcatMarket = WildcatMarket(marketAddress);
+    wildcatMarketController = WildcatMarketController(marketControllerAddress);
+    vm.stopPrank();
+  }
+```
+To run the test use the following command: forge test -vvv --mt test_WrongAccountingApprove
+
+## Tools Used
+Manual Review & Foundry 
+
+## Recommended Mitigation Steps
+In WildcatMarketToken.sols
+
+This is the correct order:
+```solidity
+  function transferFrom(
+    address from,
+    address to,
+    uint256 amount
+  ) external virtual nonReentrant returns (bool) {
+    uint256 allowed = allowance[from][msg.sender];
+    /// INFO: if scaleFactor grows state.scaleAmount(amount) will return less than amount, if a user has allowance for 10 tokens but scale factor is 1.1e27, 
+    /// succesfully he will transfer 9 tokens, and all his approval will be removed
+    // Saves gas for unlimited approvals.
+    if (allowed != type(uint256).max) {
+      uint256 newAllowance = allowed - amount;
+      _approve(from, msg.sender, newAllowance);
     }
-```
- - ```depositAsset()``` in turn calls ```getAssetCurrentLimit()``` which first calls ```depositLimitByAsset()``` in order to take the governance limit set for the specified asset
 
-``` 
-function getAssetCurrentLimit(address asset) public view override returns (uint256) {
-        return lrtConfig.depositLimitByAsset(asset) - getTotalAssetDeposits(asset);
-    }
-```
- - Then substracts the amount returned from ```getTotalAssetDeposits()``` 
+    _transfer(from, to, amount);
 
+    return true;
+  }
 ```
-function getTotalAssetDeposits(address asset) public view override returns (uint256 totalAssetDeposit) {
-        (uint256 assetLyingInDepositPool, uint256 assetLyingInNDCs, uint256 assetStakedInEigenLayer) =
-            getAssetDistributionData(asset);
-        return (assetLyingInDepositPool + assetLyingInNDCs + assetStakedInEigenLayer);
-    }
-```
+before amount is subbed from allowed convert it to scaledAmount
+Example:
+amount = state.scaleAmount(amount).toUint104();
 
- - ```getTotalAssetDeposits()``` in turn calls ```getAssetDistributionData()```
-
-```
-    function getAssetDistributionData(address asset)
-        public
-        view
-        override
-        onlySupportedAsset(asset)
-        returns (uint256 assetLyingInDepositPool, uint256 assetLyingInNDCs, uint256 assetStakedInEigenLayer)
-    {
-        // Question: is here the right place to have this? Could it be in LRTConfig?
-        assetLyingInDepositPool = IERC20(asset).balanceOf(address(this));
-
-        uint256 ndcsCount = nodeDelegatorQueue.length;
-        for (uint256 i; i < ndcsCount;) {
-            assetLyingInNDCs += IERC20(asset).balanceOf(nodeDelegatorQueue[i]);
-            assetStakedInEigenLayer += INodeDelegator(nodeDelegatorQueue[i]).getAssetBalance(asset);
-            unchecked {
-                ++i;
-            }
-        }
-    }
-```
-
- - ```getAssetDistributionData()``` check the balance of ```LRTDepositPool.sol``` for the selected token  and the balance of ```NodeDelegator.sol``` for the selected token then calls ```getAssetBalance()``` in the ```NodeDelegator.sol```
-
-```
-function getAssetBalance(address asset) external view override returns (uint256) {
-        address strategy = lrtConfig.assetStrategy(asset);
-        return IStrategy(strategy).userUnderlyingView(address(this));
-    }
-```
- - ```getAssetBalance()``` calls [userUnderlyingView](https://github.com/Layr-Labs/eigenlayer-contracts/blob/master/src/contracts/strategies/StrategyBase.sol#L245-L251) on the EigenLayer protocol, 
- - which in turn calls  [sharesToUnderlyingView](https://github.com/Layr-Labs/eigenlayer-contracts/blob/master/src/contracts/strategies/StrategyBase.sol#L200-L206) which converts the number of shares to the equivalent amount of underlying tokens for the selected strategy meaning. Meaning that this will return already deposited tokens + accrued rewards.
-
-# [L-02] NatSpec mismatch
-[LRTDepositPool.sol#L159-L162](https://github.com/code-423n4/2023-11-kelp/blob/f751d7594051c0766c7ecd1e68daeb0661e43ee3/src/LRTDepositPool.sol#L159-L162)
-```
-    /// @notice add new node delegator contract addresses
-    /// @dev only callable by LRT manager
-    /// @param nodeDelegatorContracts Array of NodeDelegator contract addresses
-    function addNodeDelegatorContractToQueue(address[] calldata nodeDelegatorContracts) external onlyLRTAdmin {
-```
-NatSpec: "only callable by LRT manager"
-modifier: `onlyLRTAdmin` (not onlyLRTManager, or vice versa for docs)
-
-# [L-03] Some funds may be deposited later than they could be
-Because deposits are 3-steps (user -> DepositPool, DepositPool -> NodeDelegator, NodeDelegator -> EigenLayer), it is possible that some user deposits into Kelp may happen right before the Manager deposits funds from NodeDelegator into EigenLayer. 
-
-Consider using depositing from DepositPool into EigenLayer via transferFrom. This would only require setting infinite approval from DepositPool to NodeDelegator, and changing NodeDelegator#depositAssetIntoStrategy to transferFrom(depositPool, strategy, amount).
+## Assessed type
+Math
