@@ -1,3 +1,5 @@
+# [NextGen Analysis Report](https://code4rena.com/reports/2023-10-nextgen)
+
 # Approach taken in evaluating the codebase
 During this 14-days audit the codebase was tested in various different ways. The first step after cloning the repository was ensuring that all tests provided pass successfully when run. After that began the phase when I got some high-level overview of the functionality by reading the code. There were some parts of the project that caught my attention. These parts were tested with Foundry POCs. Some of them were false positives, others turned out to be true positives that were reported. The contest's main page does a wonderful job providing main invariants that should never be broken and ideas for exploits. The [*gitbook*](https://seize-io.gitbook.io/nextgen/) was also a good resource especially when it came to better understanding the different sales models.
 
