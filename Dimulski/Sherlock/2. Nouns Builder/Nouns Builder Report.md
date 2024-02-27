@@ -5,7 +5,7 @@
 |:--:|:---|
 | [H-01](#H-01) | The implementation of updateFounders() introduces different vulnerabilities based on the scenario it is called in. | 
 
-## <a id='M-01'></a>[M-01] The implementation of updateFounders() introduces different vulnerabilities based on the scenario it is called in.
+## <a id='H-01'></a>[H-01] The implementation of updateFounders() introduces different vulnerabilities based on the scenario it is called in.
 ## Summary
 The [``updateFounders()``](https://github.com/sherlock-audit/2023-09-nounsbuilder/blob/main/nouns-protocol/src/token/Token.sol#L375-L437) function may be called by the owner of the Token.sol contract in different scenarios.
 When a DAO is created there are n number of tokens that can be reserved for a private sale, if the founders have decided to bootstrap the project in such a way, 
