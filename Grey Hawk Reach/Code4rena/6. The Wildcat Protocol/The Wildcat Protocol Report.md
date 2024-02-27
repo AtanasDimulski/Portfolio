@@ -1,4 +1,4 @@
-# [The Wildcat Protocol Report](https://code4rena.com/reports/2023-08-verwa)
+# [The Wildcat Protocol Report](https://code4rena.com/reports/2023-10-wildcat)
 
 ## Findings by Grey Hawk Reach
 | Severity | Title | 
