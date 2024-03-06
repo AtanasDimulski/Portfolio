@@ -1,3 +1,7 @@
+# Fixed Pay Audit
+## I will provide you with a quote based on
+ - Clear scope (.sol files) and nSLOC of the smart contracts
+ - Complexity of codebase(novel or unique logic, or mathematical models)
 # Pay Per Vulnerability (PPV) Audit
  - **Base fee**: $1000
  - **Critical**: $1000
